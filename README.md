@@ -1,7 +1,7 @@
 ## Prérequis
 
 - PHP >= 7.3
-- PHPCS Standard = PSR12
+- PHPCS Standard = PSR12 + règles Laravel
 - Node >= 16.0
 - Composer >= 2
 
@@ -35,6 +35,8 @@ npm install
 
 Ce projet contient est pré-configuré pour fonctionner avec [ddev](https://github.com/drud/ddev), notamment pour les scripts de développement front-end. Il est fortement conseillé d'utiliser `ddev` pour le développement local.
 
+Il faudra modifier le nom du projet dans `.ddev/config.yaml` après initialisation du projet.
+
 ### Laravel IDE Helper
 
 La librairie suivante est utilisé pour générer des helpers et améliorer l'autocomplétion de l'IDE : <https://github.com/barryvdh/laravel-ide-helper>
@@ -61,11 +63,13 @@ php artisan ide-helper:models --write
 
 #### DDEV
 
-| Commande            | Descript                                                        |
-| ------------------- | --------------------------------------------------------------- |
-| `ddev start`        | Démarre les conteneurs ddev                                     |
-| `ddev stop`         | Stoppe les conteneurs ddev                                      |
-| `ddev frontend-dev` | Démarre le serveur de développement Vite dans le conteneur ddev |
+| Commande         | Descript                            |
+|------------------|-------------------------------------|
+| `ddev start`     | Démarre les conteneurs ddev         |
+| `ddev stop`      | Stoppe les conteneurs ddev          |
+| `ddev launch`    | Ouvre le projet dans le navigateur  |
+| `ddev launch -m` | Ouvre Mailhog dans le navigateur    |
+| `ddev launch -p` | Ouvre PhpMyAdmin dans le navigateur |
 
 #### NPM
 
@@ -80,46 +84,3 @@ php artisan ide-helper:models --write
 | `npm run fix:styles`   | Corrige les erreurs de styles               |
 | `npm run fix:scripts`  | Corrige les erreurs de scripts              |
 | `npm run test`         | Lance les test unitaires avec `Jest`        |
-
-### Gestion des pictogrammes
-
-Pour utiliser un pictogramme déjà existant, il faut utiliser l'atome `Icon`:
-
-```vue
-<AtomsIcon name="academic-cap" />
-<AtomsIcon name="academic-cap" outline />
-```
-
-Pour ajouter un nouveau pictogramme, il faut l'ajouter au tableau `icons` dans le fichier du composant `~/resources/views/components/atoms/Icon.vue`:
-
-```diff
-+ import SolidAnnotation from '~icons/heroicons-solid/annotation';
-+ import OutlineAnnotation from '~icons/heroicons-solid/annotation';
-
-  const icons = [
-    // ...
-+   {
-+     name: 'annotation',
-+     solid: SolidAnnotation,
-+     outline: OutlineAnnotation,
-+   },
-  ];
-```
-
-
-## Intégration continue
-
-Une image personnalisée a été créée pour être utilisé dans le CI.
-
-Si une modification est faite dans le `DockerFile` il sera nécessaire d'effectuer les commandes suivantes :
-
-```bash
-# Connexion au registry.
-docker login registry.gitlab.com
-
-# Build de l'image.
-docker build -t registry.gitlab.com/studiometa/napoleon .
-
-# Envoie sur le registry.
-docker push registry.gitlab.com/studiometa/napoleon
-```
